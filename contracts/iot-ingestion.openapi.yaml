@@ -10,6 +10,8 @@ paths:
   /health:
     get:
       summary: Kiểm tra trạng thái hệ thống
+      description: Kiểm tra xem service iot ingestion đã chạy chưa.
+      operationId: getIotHealth
       responses:
         "200":
           description: OK
@@ -24,6 +26,8 @@ paths:
   /readings:
     post:
       summary: Nhận dữ liệu từ thiết bị IoT
+      description: Gửi dữ liệu nhiệt độ từ cảm biến lên hệ thống.
+      operationId: createReading
       requestBody:
         required: true
         content:

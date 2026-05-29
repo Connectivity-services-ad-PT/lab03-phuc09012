@@ -10,6 +10,8 @@ paths:
   /health:
     get:
       summary: Kiểm tra trạng thái hệ thống
+      description: Kiểm tra xem service ai vision đã chạy chưa.
+      operationId: getVisionHealth
       responses:
         "200":
           description: OK
@@ -24,6 +26,8 @@ paths:
   /detect:
     post:
       summary: Phát hiện đối tượng trong ảnh
+      description: Nhận đường link ảnh từ camera và tiến hành nhận diện AI.
+      operationId: detectImage
       requestBody:
         required: true
         content:
