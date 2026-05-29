@@ -2,13 +2,19 @@ openapi: 3.1.0
 info:
   title: Smart Campus — IoT Ingestion API
   version: 0.3.0
-  description: Contract mock tối thiểu cho phân hệ IoT Ingestion (FIT4110 Lab 03)
+  description: Contract mock cho phân hệ IoT Ingestion (FIT4110 Lab 03)
 servers:
   - url: http://localhost:4010
     description: Prism mock server for IoT Ingestion
+tags:
+  - name: system
+    description: Health endpoints
+  - name: iot
+    description: Ingestion endpoints
 paths:
   /health:
     get:
+      tags: [system]
       summary: Kiểm tra trạng thái hệ thống
       description: Kiểm tra xem service iot ingestion đã chạy chưa.
       operationId: getIotHealth
@@ -18,9 +24,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/HealthResponse"
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: ok
   /readings:
     post:
+      tags: [iot]
       summary: Nhận dữ liệu từ thiết bị IoT
       description: Gửi dữ liệu nhiệt độ từ cảm biến lên hệ thống.
       operationId: createReading
@@ -29,40 +41,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ReadingRequest"
+              type: object
+              required: [device_id]
+              properties:
+                device_id:
+                  type: string
+                  example: dev-001
+                temperature:
+                  type: number
+                  example: 25.5
       responses:
         "200":
           description: Thành công
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponse"
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: success
         "400":
           description: Lỗi dữ liệu đầu vào
-
-components:
-  schemas:
-    HealthResponse:
-      type: object
-      required: [status]
-      properties:
-        status:
-          type: string
-          example: ok
-    ReadingRequest:
-      type: object
-      required: [device_id]
-      properties:
-        device_id:
-          type: string
-          example: dev-001
-        temperature:
-          type: number
-          example: 25.5
-    StandardResponse:
-      type: object
-      required: [status]
-      properties:
-        status:
-          type: string
-          example: success

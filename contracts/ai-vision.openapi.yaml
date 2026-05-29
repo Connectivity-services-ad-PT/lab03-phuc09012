@@ -2,13 +2,19 @@ openapi: 3.1.0
 info:
   title: Smart Campus — AI Vision API
   version: 0.3.0
-  description: Contract mock tối thiểu cho phân hệ AI Vision (FIT4110 Lab 03)
+  description: Contract mock cho phân hệ AI Vision (FIT4110 Lab 03)
 servers:
   - url: http://localhost:4011
     description: Prism mock server for AI Vision
+tags:
+  - name: system
+    description: Health endpoints
+  - name: vision
+    description: AI Vision endpoints
 paths:
   /health:
     get:
+      tags: [system]
       summary: Kiểm tra trạng thái hệ thống
       description: Kiểm tra xem service ai vision đã chạy chưa.
       operationId: getVisionHealth
@@ -18,9 +24,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/HealthResponse"
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: ok
   /detect:
     post:
+      tags: [vision]
       summary: Phát hiện đối tượng trong ảnh
       description: Nhận đường link ảnh từ camera và tiến hành nhận diện AI.
       operationId: detectImage
@@ -29,41 +41,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DetectionRequest"
+              type: object
+              required: [camera_id]
+              properties:
+                camera_id:
+                  type: string
+                  example: CAM01
+                image_url:
+                  type: string
+                  format: uri
+                  example: https://example.com/frame.jpg
       responses:
         "200":
           description: Thành công
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StandardResponse"
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: success
         "400":
           description: Lỗi dữ liệu đầu vào
-
-components:
-  schemas:
-    HealthResponse:
-      type: object
-      required: [status]
-      properties:
-        status:
-          type: string
-          example: ok
-    DetectionRequest:
-      type: object
-      required: [camera_id]
-      properties:
-        camera_id:
-          type: string
-          example: CAM01
-        image_url:
-          type: string
-          format: uri
-          example: https://example.com/frame.jpg
-    StandardResponse:
-      type: object
-      required: [status]
-      properties:
-        status:
-          type: string
-          example: success
