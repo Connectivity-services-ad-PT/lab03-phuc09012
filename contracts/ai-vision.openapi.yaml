@@ -15,7 +15,7 @@ paths:
   /health:
     get:
       tags: [system]
-      summary: Kiểm tra trạng thái hệ thống
+      summary: Kiểm tra trạng thái hệ thống (GET)
       description: Kiểm tra xem service ai vision đã chạy chưa.
       operationId: getVisionHealth
       responses:
@@ -30,6 +30,14 @@ paths:
                   status:
                     type: string
                     example: ok
+    head:
+      tags: [system]
+      summary: Kiểm tra trạng thái hệ thống (HEAD)
+      description: Phản hồi nhanh cho công cụ wait-on.
+      operationId: headVisionHealth
+      responses:
+        "200":
+          description: OK
   /detect:
     post:
       tags: [vision]
