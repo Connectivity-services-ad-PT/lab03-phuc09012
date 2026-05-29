@@ -18,11 +18,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: ok
+                $ref: "#/components/schemas/HealthResponse"
   /detect:
     post:
       summary: Phát hiện đối tượng trong ảnh
@@ -33,26 +29,41 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required: [camera_id]
-              properties:
-                camera_id:
-                  type: string
-                  example: CAM01
-                image_url:
-                  type: string
-                  format: uri
-                  example: https://example.com/frame.jpg
+              $ref: "#/components/schemas/DetectionRequest"
       responses:
         "200":
           description: Thành công
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: success
+                $ref: "#/components/schemas/StandardResponse"
         "400":
           description: Lỗi dữ liệu đầu vào
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          example: ok
+    DetectionRequest:
+      type: object
+      required: [camera_id]
+      properties:
+        camera_id:
+          type: string
+          example: CAM01
+        image_url:
+          type: string
+          format: uri
+          example: https://example.com/frame.jpg
+    StandardResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          example: success

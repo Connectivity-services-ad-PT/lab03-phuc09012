@@ -18,11 +18,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: ok
+                $ref: "#/components/schemas/HealthResponse"
   /readings:
     post:
       summary: Nhận dữ liệu từ thiết bị IoT
@@ -33,25 +29,40 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required: [device_id]
-              properties:
-                device_id:
-                  type: string
-                  example: dev-001
-                temperature:
-                  type: number
-                  example: 25.5
+              $ref: "#/components/schemas/ReadingRequest"
       responses:
         "200":
           description: Thành công
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: success
+                $ref: "#/components/schemas/StandardResponse"
         "400":
           description: Lỗi dữ liệu đầu vào
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          example: ok
+    ReadingRequest:
+      type: object
+      required: [device_id]
+      properties:
+        device_id:
+          type: string
+          example: dev-001
+        temperature:
+          type: number
+          example: 25.5
+    StandardResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          example: success
