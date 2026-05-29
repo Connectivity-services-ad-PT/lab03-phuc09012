@@ -4,7 +4,7 @@ info:
   version: 0.3.0
   description: Contract mock cho phân hệ IoT Ingestion (FIT4110 Lab 03)
 servers:
-  - url: http://127.0.0.1:4010
+  - url: http://0.0.0.0:4010
     description: Prism mock server for IoT Ingestion
 tags:
   - name: system
