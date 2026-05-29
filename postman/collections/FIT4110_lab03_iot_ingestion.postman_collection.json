@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "c1a2b3c4-d5e6-4fa7-8b9c-0d1e2f3a4b5c",
+		"_postman_id": "a6b12345-c7d8-4e90-b1c2-3d4e5f6a7b8c",
 		"name": "FIT4110_lab03_iot_ingestion",
-		"description": "Bộ kiểm thử tích hợp chuẩn cho phân hệ IoT Ingestion",
+		"description": "Smart Campus - IoT Ingestion Test Suite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -38,16 +38,97 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET Latest Reading",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/readings/latest",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"readings",
+								"latest"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "02_Auth",
-			"item": []
+			"item": [
+				{
+					"name": "POST Create Reading - Missing Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"device_id\": \"dev-001\",\n  \"temperature\": 25.5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/readings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"readings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "03_Negative",
-			"item": []
+			"item": [
+				{
+					"name": "POST Create Reading - Missing Device ID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"temperature\": 25.5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/readings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"readings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "04_Boundary_Reliability",
