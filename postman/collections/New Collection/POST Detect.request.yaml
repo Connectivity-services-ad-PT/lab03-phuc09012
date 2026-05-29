@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/detect"
+method: POST
+headers:
+  Authorization: Bearer 123456
+body:
+  type: json
+  content: "{\r
+
+    \  \"camera_id\": \"CAM01\",\r
+
+    \  \"image_url\": \"https://example.com/frame.jpg\"\r
+
+    }"
+order: 2000
